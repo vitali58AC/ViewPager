@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:contentDescription="TODO"
+        android:id="@+id/fragmentImage"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:contentDescription="@string/news_logo"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView
+        android:id="@+id/articleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Sample loooooong text"
-        android:layout_marginTop="20dp"/>
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/fragmentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/dark_gray"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"
+        tools:text="@tools:sample/cities" />
 </LinearLayout>
