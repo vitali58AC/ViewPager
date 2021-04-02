@@ -45,5 +45,62 @@ As we reach Platform Stability in August 2021, all of the app-facing system beha
 <b>Get started with Android 12</b>\n\n
 The Developer Preview has everything you need to try the Android 12 features, test your apps, and give us feedback. You can get started today by flashing a device system image to a Pixel 3 / 3 XL, Pixel 3a / 3a XL, Pixel 4 / 4 XL, Pixel 4a / 4a 5G, or Pixel 5 device or using the Android Emulator. If you\’ve already installed a preview build to your Pixel device, you\’ll automatically get future updates over-the-air for all later previews and Betas. More details on how to get Android 12 are here.\n
 You can also test your apps on Android TV using today\’s release and try the all-new Google TV experience. Learn more here and get started with your ADT-3 developer kit.\n\n\n 17 March 2021</string>
-<string name="android_12_title"><b>Android 12 Developer Preview 2</b></string>
+    <string name="android_12_title"><b>Android 12 Developer Preview 2</b></string>
+    <string name="final_challenge_title"><b>Android Dev Challenge Finale: Weather app</b></string>
+    <string name="final_chellenge_text">Let your creativity shine in the final week of the #AndroidDevChallenge! Last week we asked you to be fast, but for this final week we ask you to bring your \'A\' game. Here\’s the challenge:\n\n
+<b>Week #4: Weather app 🌤</b>\n\n
+Create a single-screen weather forecast app. You have until March 23rd, 23:59 PST to submit your entry.\n
+Your UI must be fully built in Compose. You can use fake weather data.\n\n
+We will judge your submission on these four categories:\n\n
+- Visual beauty\n
+- Novelty of idea\n
+- Code quality\n
+- Overall execution (including accessibility)\n\n
+To help implement a beautiful design, check out the Compose documentation on layouts, theming, and graphics. Think of novel uses of animations and gestures. Improve your code quality with architecture and testing. And for overall execution, make sure to read about accessibility.\n\n
+Your solution must be implemented in a public GitHub repository. Make a copy of this Github repository template and follow the instructions in the README. The template contains a basic Hello World! in Compose and a continuous integration setup.\n\n
+The App Submission must, at a minimum, support English language use.\n\n
+<b>This week\’s prize: 5 x Google Pixel 5!</b>\n\n
+This week you have a chance of winning a Google Pixel 5, the ultimate 5G Google phone! We\’ll be giving away one Google Pixel 5 for the winner of each of the four categories, and one for the best of the best submission.\n\n
+<b>Help make Jetpack Compose better</b>\n\n
+Community is at the heart of Jetpack Compose and your feedback helps us build a better product:\n\n
+- File issues with Jetpack Compose on the official issue tracker.\n
+- Sign up to be part of the Jetpack Compose research studies.\n\n
+       Video: <b>https://youtu.be/sZK3HSX4cRU</b>\n\n\n 17 March 2021
+</string>
+    <string name="boost_develop_title"><b>Boosting developer success on Google Play</b></string>
+    <string name="boost_develop_text">Helping developers build sustainable businesses is a core part of Google Play\’s mission. We work with partners every day to understand the challenges they face and help them bring their innovative ideas to life. Getting a new app off the ground and into orbit is not easy! To aid their quest for growth we provide a broad range of support, from powerful marketing tools and actionable data in the Play Console, education via Play Academy, best practices and thought leadership resources, programs such as the Indie Games Festival, Indie Corner, and accelerator programs around the world. We\’re always looking for new ways to give them an added boost.\n\n
+Starting on July 1, 2021 we are reducing the service fee Google Play receives when a developer sells digital goods or services to 15% for the first $1M (USD) of revenue every developer earns each year. With this change, 99% of developers globally that sell digital goods and services with Play will see a 50% reduction in fees. These are funds that can help developers scale up at a critical phase of their growth by hiring more engineers, adding to their marketing staff, increasing server capacity, and more.\n\n
+While these investments are most critical when developers are in the earlier stages of growth, scaling an app doesn\’t stop once a partner has reached $1M in revenue — we\’ve heard from our partners making $2M, $5M and even $10M a year that their services are still on a path to self-sustaining orbit. This is why we are making this reduced fee on the first $1M of total revenue earned each year available to every Play developer, regardless of size. We believe this is a fair approach that aligns with Google\’s broader mission to help all developers succeed. We look forward to sharing full details in the coming months.\n\n
+As a platform we do not succeed unless our partners succeed. Android and Google Play have always listened to our developer partners from around the world and we continue to take their input into account as we build and run the ecosystem. We look forward to seeing more businesses scale to new heights on Android, and to further discussions with our developer community to find new ways to support them technically and economically as they build their businesses.\n\n\n 16 March 2021
+</string>
+    <string name="week_three_challenge_title"><b>Android Dev Challenge: Week 3 - Speed round</b></string>
+    <string name="week_three_challenge_text">On your marks…Get set… Wait a second! Save the date for the third week of the #AndroidDevChallenge! On March 13th, compete with other developers in your time zone; the fastest Compose skills wins! We loved all the creative submissions of week #1 and #2, but now we\’re looking for speed. Here\’s your challenge:\n\n
+<b>Week #3 - Speed round 🏎</b>\n\n
+Be the fastest to implement a set of designs provided by us. The designs will be posted here when the challenge starts. Submit your entry as soon as you finish implementing the designs.\n\n
+We\’ll post different designs at 3 different times on the 13th:\n\n
+- APAC-friendly: opens at 9AM UTC+8\n
+- EMEA-friendly: opens at 9AM UTC\n
+- Americas-friendly: opens at 9AM UTC-8\n
+We\’ll update this blog post at the beginning of each round with the link to the designs.\n\n
+Your UI must be fully built in Compose, and strictly match all the guidelines specified in the designs. To help you with the implementation, check out the Compose documentation on theming, layouts, and navigation. For some hands-on learning try out the Compose pathway, with codelabs covering several topics useful for completing this challenge.\n\n
+Your solution must be implemented in a GitHub repository. Make a copy of this Github repository template and follow the instructions in the README. The template contains a basic Hello World! in Compose and a continuous integration setup.\n\n
+<b>This week\’s prize: a Google Pixel 5!</b>\n\n
+For this week\’s challenge, we\’re giving away a Google Pixel 5, the ultimate 5G Google phone. In fact, we\’ll be giving away three Google Pixel 5 phones: one to each developer who is fastest to submit a successfully implemented design for each of the three rounds of challenges\n\n\n 10 March 2021
+ </string>
+    <string name="sub_dollar_title"><b>Sub-dollar pricing expansion in 20 markets</b></string>
+    <string name="sub_dollar_text">At Google Play, we\’re committed to giving Android developers access to the largest possible market for your apps and games. Google Play already supports free and paid apps in over 165 markets. We had previously lowered minimum prices developers can set for their products for 20 markets like India and Brazil. Today, we\’re happy to announce that we have reduced the minimum price limit for products in 20 more markets across Latin America, EMEA, and APAC.\n\n
+With these new lower limits, you can now set prices in the range of 10-30 cents US equivalent in most of these markets. These ultra-low price points, or “sub-dollar” prices, allow you to reach new potential buyers by adjusting your pricing to better reflect local purchasing power and demand. It also gives you more flexibility to set your global pricing strategy and gives more users the opportunity to enjoy monetized experiences in your apps and games.\n\n
+The minimum price limit for paid apps, in-app products, and subscriptions has been lowered in these new markets: Bangladesh, Bulgaria, Bolivia, Costa Rica, Czech Republic, Denmark, Croatia, Hungary, Jordan, Kazakhstan, Lebanon, Sri Lanka, Myanmar, Pakistan, Paraguay, Romania, Serbia, Thailand, Tanzania and Vietnam.\n\n
+Additional markets where sub-dollar pricing is available: Brazil, Chile, Colombia, Egypt, India, Indonesia, Malaysia, Mexico, Nigeria, Peru, Philippines, Poland, Russia, Saudi Arabia, South Africa, Turkey and Ukraine\n\n
+To adjust your prices in Google Play Console, please see our Help Center article. The full list of price ranges can be found here.\n\n
+<b>Best practices for sub-dollar pricing</b>\n\n
+Since the feature was introduced in 2015, Android developers have been using sub-dollar pricing to expand their paying user base in creative ways. Here are a few ways you can use sub-dollar pricing to help grow your own business:\n\n
+
+- <b>Try offering limited-time promotions.</b> Sub-dollar pricing is a great tool to entice new users through promotions, or to reward loyal users with low-cost perks. For example, to convert more paying users of their popular game Lords Mobile, developer IGG sometimes offers special bundles for only IDR 3000 (USD 0.20) that offer 2-3x more value for a limited time. Because these are special offers, it allowed them to expand their payer base without cannibalization.\n\n
+- <b>Offer seasonal deals.</b> Sub-dollar pricing is also useful for seasonal sales. Because users know they have a limited opportunity to buy these items, it makes them more attractive. Combined with the low price, it can be an attractive offer for first time buyers. Moonton offers rare skins when users make their first purchase of the season in Mobile Legends, even if it\’s a sub-dollar purchase.\n\n
+- <b>Try introductory pricing offers.</b> Sub-dollar pricing can also be used to attract new paying users with introductory pricing. For example, you could offer users who have never made a purchase a valuable item at a sub-dollar price. Developer Moonton does this, offering users access to popular heroes in their game Mobile Legends: Bang Bang when they make their first purchase. This strategy helps them reach new paying users without much impact on their overall game economy.\n\n
+- <b>Reward loyalty.</b> You can also try sub-dollar pricing in conjunction with repeat purchase events. For example, you could offer special bonuses to players making one purchase a day for seven days, without users spending more than they are comfortable with.\n\n
+- <b>Offer gacha.</b> Sub-dollar pricing works well for chance-based items, or “gacha,” which can appeal to new users. Users who aren\’t willing to spend $5 on a valuable in-game item may be willing to pay $0.15 to open a treasure chest with a chance of finding the item inside. By offering gacha at sub-dollar pricing, many users may be willing to pay a token amount just to try their luck.\n\n
+There are many ways to use sub-dollar and localized pricing and the suggestions listed above are just a starting point. We\’re excited to see how you’ll use our features to grow your business.\n\n\n 04 March 2021
+</string>
 </resources>
