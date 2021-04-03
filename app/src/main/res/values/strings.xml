@@ -103,4 +103,5 @@ Since the feature was introduced in 2015, Android developers have been using sub
 - <b>Offer gacha.</b> Sub-dollar pricing works well for chance-based items, or “gacha,” which can appeal to new users. Users who aren\’t willing to spend $5 on a valuable in-game item may be willing to pay $0.15 to open a treasure chest with a chance of finding the item inside. By offering gacha at sub-dollar pricing, many users may be willing to pay a token amount just to try their luck.\n\n
 There are many ways to use sub-dollar and localized pricing and the suggestions listed above are just a starting point. We\’re excited to see how you’ll use our features to grow your business.\n\n\n 04 March 2021
 </string>
+    <string name="next">Next</string>
 </resources>

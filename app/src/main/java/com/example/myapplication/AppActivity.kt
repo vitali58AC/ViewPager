@@ -1,8 +1,12 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.databinding.ActivityAppBinding
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+import kotlin.math.abs
+import kotlin.math.max
 
 class AppActivity : AppCompatActivity() {
     private val articles: List<ArticleModel> = listOf(
@@ -34,13 +38,39 @@ class AppActivity : AppCompatActivity() {
     )
 
     private lateinit var binding: ActivityAppBinding
+    private val minScale = 0.65f
+    private val minAlpha = 0.3f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         val adapter = ViewPagerAdapter(articles, this)
-
         binding.containerViewPager2.adapter = adapter
+        val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
+        val viewPager = findViewById<ViewPager2>(R.id.containerViewPager2)
+        viewPager.adapter = adapter
+        wormDotsIndicator.setViewPager2(viewPager)
+        binding.containerViewPager2.setPageTransformer { page, position ->
+            when {
+                position < -1 -> {
+                    page.alpha = 0f
+                }
+                position <= 1 -> {
+                    page.scaleX = max(minScale, 1 - abs(position))
+                    page.scaleY = max(minScale, 1 - abs(position))
+                    page.alpha = max(minAlpha, 1 - abs(position))
+                }
+                else -> {
+                    page.alpha = 0f
+                }
+            }
+        }
+        binding.testButton.setOnClickListener {
+            val currentItem = binding.containerViewPager2.currentItem
+            if (currentItem <= 4) {
+                binding.containerViewPager2.currentItem = currentItem + 1
+            } else binding.containerViewPager2.currentItem = 0
+        }
     }
 }
