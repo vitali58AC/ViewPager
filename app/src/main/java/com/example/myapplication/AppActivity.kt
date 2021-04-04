@@ -1,9 +1,12 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.databinding.ActivityAppBinding
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.tabs.TabLayoutMediator
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlin.math.abs
 import kotlin.math.max
@@ -66,6 +69,23 @@ class AppActivity : AppCompatActivity() {
                 }
             }
         }
+        TabLayoutMediator(binding.tabsPager, binding.containerViewPager2) { tab, position ->
+            tab.text = "News #${position + 1}"
+        }.attach()
+
+        binding.tabsPager.getTabAt(3)?.orCreateBadge?.apply {
+            number = 3
+            badgeGravity = BadgeDrawable.TOP_END
+        }
+
+        binding.containerViewPager2.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tabsPager.getTabAt(position)?.removeBadge()
+            }
+        })
+
+
         binding.testButton.setOnClickListener {
             val currentItem = binding.containerViewPager2.currentItem
             if (currentItem <= 4) {
@@ -74,3 +94,15 @@ class AppActivity : AppCompatActivity() {
         }
     }
 }
+
+/*
+override fun onChange(data: Any) {
+    Toast.makeText(activity?.baseContext, data as String, Toast.LENGTH_SHORT).show()
+}
+}
+
+interface IOnDetailChangeListener  {
+    fun onChange(data: Any)
+}
+
+*/

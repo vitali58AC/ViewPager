@@ -23,7 +23,6 @@ class ViewPagerFragment() : Fragment() {
         binding.articleTitle.setText(requireArguments().getInt(KEY_TITLE))
         binding.fragmentText.setText(requireArguments().getInt(KEY_TEXT))
         binding.fragmentImage.setImageResource(requireArguments().getInt(KEY_IMAGE))
-
         return view
     }
 
