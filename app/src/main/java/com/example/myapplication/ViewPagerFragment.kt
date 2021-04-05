@@ -13,6 +13,10 @@ class ViewPagerFragment() : Fragment() {
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
 
+    private val parentListener by lazy {
+        activity as? FragmentOnClickListener
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,6 +27,10 @@ class ViewPagerFragment() : Fragment() {
         binding.articleTitle.setText(requireArguments().getInt(KEY_TITLE))
         binding.fragmentText.setText(requireArguments().getInt(KEY_TEXT))
         binding.fragmentImage.setImageResource(requireArguments().getInt(KEY_IMAGE))
+        binding.badgeGenerator.setOnClickListener {
+            val randomInt = (0..5).random()
+            parentListener?.onFragmentClick(randomInt)
+        }
         return view
     }
 

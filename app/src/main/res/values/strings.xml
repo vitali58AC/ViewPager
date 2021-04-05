@@ -104,4 +104,5 @@ Since the feature was introduced in 2015, Android developers have been using sub
 There are many ways to use sub-dollar and localized pricing and the suggestions listed above are just a starting point. We\’re excited to see how you’ll use our features to grow your business.\n\n\n 04 March 2021
 </string>
     <string name="next">Next</string>
+    <string name="create_random_badge">Create random badge</string>
 </resources>

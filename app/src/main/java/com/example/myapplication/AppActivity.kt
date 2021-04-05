@@ -11,7 +11,7 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlin.math.abs
 import kotlin.math.max
 
-class AppActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     private val articles: List<ArticleModel> = listOf(
         ArticleModel(
             R.string.oboe_title,
@@ -73,12 +73,8 @@ class AppActivity : AppCompatActivity() {
             tab.text = "News #${position + 1}"
         }.attach()
 
-        binding.tabsPager.getTabAt(3)?.orCreateBadge?.apply {
-            number = 3
-            badgeGravity = BadgeDrawable.TOP_END
-        }
-
-        binding.containerViewPager2.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback(){
+        binding.containerViewPager2.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.tabsPager.getTabAt(position)?.removeBadge()
@@ -93,16 +89,11 @@ class AppActivity : AppCompatActivity() {
             } else binding.containerViewPager2.currentItem = 0
         }
     }
-}
 
-/*
-override fun onChange(data: Any) {
-    Toast.makeText(activity?.baseContext, data as String, Toast.LENGTH_SHORT).show()
+    override fun onFragmentClick(data: Any) {
+        binding.tabsPager.getTabAt(data as Int)?.orCreateBadge?.apply {
+            number += 1
+            badgeGravity = BadgeDrawable.TOP_END
+        }
+    }
 }
-}
-
-interface IOnDetailChangeListener  {
-    fun onChange(data: Any)
-}
-
-*/
