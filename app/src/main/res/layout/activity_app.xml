@@ -6,14 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".AppActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/toolbar_menu" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabsPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="auto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:tabMode="auto" />
 
     <Button
         android:id="@+id/testButton"
@@ -29,10 +38,10 @@
         android:id="@+id/containerViewPager2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabsPager"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_height="500dp" />
 
     <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator

@@ -2,8 +2,10 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.ArticleTag.*
 import com.example.myapplication.databinding.ActivityAppBinding
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
@@ -16,27 +18,33 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         ArticleModel(
             R.string.oboe_title,
             R.string.oboe_text,
-            R.drawable.android_high_performance_game_audio_with_oboe_header
+            R.drawable.android_high_performance_game_audio_with_oboe_header,
+            listOf(DEVELOPER_NEWS, FEATURES)
         ), ArticleModel(
             R.string.android_12_title,
             R.string.android_12_text,
-            R.drawable.android_12_logo
+            R.drawable.android_12_logo,
+            listOf(DEVELOPER_NEWS, FEATURES)
         ), ArticleModel(
             R.string.final_challenge_title,
             R.string.final_chellenge_text,
-            R.drawable.final_challeng
+            R.drawable.final_challeng,
+            listOf(DEVELOPER_NEWS, CHALLENGE_WEEK)
         ), ArticleModel(
             R.string.boost_develop_title,
             R.string.boost_develop_text,
-            R.drawable.play_logo
+            R.drawable.play_logo,
+            listOf(DEVELOPER_NEWS, OTHER)
         ), ArticleModel(
             R.string.week_three_challenge_title,
             R.string.week_three_challenge_text,
-            R.drawable.week_three_challenge
+            R.drawable.week_three_challenge,
+            listOf(DEVELOPER_NEWS, CHALLENGE_WEEK)
         ), ArticleModel(
             R.string.sub_dollar_title,
             R.string.sub_dollar_text,
-            R.drawable.sub_dollar
+            R.drawable.sub_dollar,
+            listOf(DEVELOPER_NEWS, OTHER)
         )
     )
 
@@ -48,6 +56,12 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         binding = ActivityAppBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.toolbar.title = "Developer news"
+        binding.toolbar.menu.findItem(R.id.actionFilter).setOnMenuItemClickListener {
+        showFilterDialog()
+            true
+        }
+
         val adapter = ViewPagerAdapter(articles, this)
         binding.containerViewPager2.adapter = adapter
         val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
@@ -95,5 +109,20 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
             number += 1
             badgeGravity = BadgeDrawable.TOP_END
         }
+    }
+
+    private fun showFilterDialog() {
+        val listTags = arrayOf("Features", "Developer news", "Challenge week", "Other")
+        val booleanTags = booleanArrayOf(true, true, true, true)
+        AlertDialog.Builder(this)
+            .setTitle("Choose tags")
+            .setMultiChoiceItems(listTags, booleanTags) {_,which,_ ->
+                Toast.makeText(this, "You choose ${listTags[which]}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .setPositiveButton("Filter", { _, _ -> })
+            .setNegativeButton("Cancel", { _, _ -> })
+            .show()
+
     }
 }

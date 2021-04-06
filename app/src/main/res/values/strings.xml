@@ -105,4 +105,5 @@ There are many ways to use sub-dollar and localized pricing and the suggestions 
 </string>
     <string name="next">Next</string>
     <string name="create_random_badge">Create random badge</string>
+    <string name="filter_news">Filter news</string>
 </resources>
