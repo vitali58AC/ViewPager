@@ -1,6 +1,9 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +17,7 @@ import kotlin.math.abs
 import kotlin.math.max
 
 class AppActivity : AppCompatActivity(), FragmentOnClickListener {
-    private val articles: List<ArticleModel> = listOf(
+    private var articles: List<ArticleModel> = listOf(
         ArticleModel(
             R.string.oboe_title,
             R.string.oboe_text,
@@ -51,23 +54,31 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     private lateinit var binding: ActivityAppBinding
     private val minScale = 0.65f
     private val minAlpha = 0.3f
+    private var booleanTags1: BooleanArray = booleanArrayOf(true, true, true, true)
+    private var booleanTags2: BooleanArray = booleanArrayOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+/*        if (savedInstanceState != null) {
+            booleanTags2 = savedInstanceState.getBooleanArray("Array")
+                ?: error("Error in save state!")
+            Log.d(
+                "CustomTAF",
+                "сейчас booleanTags2 такой в месте восстановления : ${booleanTags2[0]},${booleanTags2[1]},${booleanTags2[2]},${booleanTags2[3]}"
+            )
+        }*/
+        articlesFilter(articles)
         binding.toolbar.title = "Developer news"
         binding.toolbar.menu.findItem(R.id.actionFilter).setOnMenuItemClickListener {
-        showFilterDialog()
+            showFilterDialogFragment()
+            //showFilterDialog()
             true
         }
 
-        val adapter = ViewPagerAdapter(articles, this)
-        binding.containerViewPager2.adapter = adapter
-        val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
-        val viewPager = findViewById<ViewPager2>(R.id.containerViewPager2)
-        viewPager.adapter = adapter
-        wormDotsIndicator.setViewPager2(viewPager)
+
         binding.containerViewPager2.setPageTransformer { page, position ->
             when {
                 position < -1 -> {
@@ -83,9 +94,7 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
                 }
             }
         }
-        TabLayoutMediator(binding.tabsPager, binding.containerViewPager2) { tab, position ->
-            tab.text = "News #${position + 1}"
-        }.attach()
+
 
         binding.containerViewPager2.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
@@ -102,27 +111,100 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
                 binding.containerViewPager2.currentItem = currentItem + 1
             } else binding.containerViewPager2.currentItem = 0
         }
+
+    }
+
+
+    private fun articlesFilter(listArticles: List<ArticleModel>) {
+        val filterArticlesList = mutableSetOf<ArticleModel>()
+        if (booleanTags1[0]) {
+            filterArticlesList.addAll(listArticles.filter {
+                it.tags.contains(FEATURES)
+            })
+        }
+        if (booleanTags1[1]) {
+            filterArticlesList.addAll(listArticles.filter {
+                it.tags.contains(DEVELOPER_NEWS)
+            })
+        }
+        if (booleanTags1[2]) {
+            filterArticlesList.addAll(listArticles.filter {
+                it.tags.contains(OTHER)
+            })
+        }
+        if (booleanTags1[3]) {
+            filterArticlesList.addAll(listArticles.filter {
+                it.tags.contains(CHALLENGE_WEEK)
+            })
+        }
+        val adapter = ViewPagerAdapter(filterArticlesList.toList(), this)
+        binding.containerViewPager2.adapter = adapter
+        val wormDotsIndicator = findViewById<WormDotsIndicator>(R.id.worm_dots_indicator)
+        val viewPager = findViewById<ViewPager2>(R.id.containerViewPager2)
+        viewPager.adapter = adapter
+        wormDotsIndicator.setViewPager2(viewPager)
+        TabLayoutMediator(binding.tabsPager, binding.containerViewPager2) { tab, position ->
+            tab.text = "News #${position + 1}"
+        }.attach()
     }
 
     override fun onFragmentClick(data: Any) {
-        binding.tabsPager.getTabAt(data as Int)?.orCreateBadge?.apply {
-            number += 1
-            badgeGravity = BadgeDrawable.TOP_END
+        if (data is Int) {
+            binding.tabsPager.getTabAt(data)?.orCreateBadge?.apply {
+                number += 1
+                badgeGravity = BadgeDrawable.TOP_END
+            }
+        }
+        if (data is BooleanArray) {
+            booleanTags1 = data
+            booleanTags2 = data
+            articlesFilter(articles)
+            Log.d(
+                "CustomTAF",
+                "сейчас booleanTags2 такой : ${booleanTags2[0]},${booleanTags2[1]},${booleanTags2[2]},${booleanTags2[3]}"
+            )
         }
     }
 
+    //Отобразить диалог без фрагмента
     private fun showFilterDialog() {
         val listTags = arrayOf("Features", "Developer news", "Challenge week", "Other")
         val booleanTags = booleanArrayOf(true, true, true, true)
         AlertDialog.Builder(this)
             .setTitle("Choose tags")
-            .setMultiChoiceItems(listTags, booleanTags) {_,which,_ ->
-                Toast.makeText(this, "You choose ${listTags[which]}", Toast.LENGTH_SHORT)
-                    .show()
+            .setMultiChoiceItems(listTags, booleanTags) { _, which, _ ->
+                toast(this, "You choose ${listTags[which]}")
             }
             .setPositiveButton("Filter", { _, _ -> })
             .setNegativeButton("Cancel", { _, _ -> })
             .show()
 
     }
+
+    private fun showFilterDialogFragment() {
+        Log.d(
+            "CustomTAF",
+            "сейчас лист такой в активити: ${booleanTags1[0]},${booleanTags1[1]},${booleanTags1[2]},${booleanTags1[3]}"
+        )
+        FilterDialogFragment.newInstance(booleanTags1)
+            .show(supportFragmentManager, "Filter dialog")
+    }
+
+    companion object {
+        fun toast(context: Context, text: String) {
+            Toast.makeText(
+                context,
+                text,
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putBooleanArray("Array", booleanTags2)
+
+    }
+
 }
