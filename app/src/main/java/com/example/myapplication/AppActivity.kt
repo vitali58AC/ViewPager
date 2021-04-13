@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -13,41 +12,48 @@ import com.example.myapplication.databinding.ActivityAppBinding
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+import java.util.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 
 class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     private var articles: List<ArticleModel> = listOf(
         ArticleModel(
-            R.string.oboe_title,
-            R.string.oboe_text,
-            R.drawable.android_high_performance_game_audio_with_oboe_header,
-            listOf(DEVELOPER_NEWS, FEATURES)
+            title = R.string.oboe_title,
+            text = R.string.oboe_text,
+            image = R.drawable.android_high_performance_game_audio_with_oboe_header,
+            tags = listOf(DEVELOPER_NEWS, FEATURES),
+            id = 0
         ), ArticleModel(
-            R.string.android_12_title,
-            R.string.android_12_text,
-            R.drawable.android_12_logo,
-            listOf(DEVELOPER_NEWS, FEATURES)
+            title = R.string.android_12_title,
+            text = R.string.android_12_text,
+            image = R.drawable.android_12_logo,
+            tags = listOf(DEVELOPER_NEWS, FEATURES),
+            id = 1
         ), ArticleModel(
-            R.string.final_challenge_title,
-            R.string.final_chellenge_text,
-            R.drawable.final_challeng,
-            listOf(DEVELOPER_NEWS, CHALLENGE_WEEK)
+            title = R.string.final_challenge_title,
+            text = R.string.final_chellenge_text,
+            image = R.drawable.final_challeng,
+            tags = listOf(DEVELOPER_NEWS, CHALLENGE_WEEK),
+            id = 2
         ), ArticleModel(
-            R.string.boost_develop_title,
-            R.string.boost_develop_text,
-            R.drawable.play_logo,
-            listOf(DEVELOPER_NEWS, OTHER)
+            title = R.string.boost_develop_title,
+            text = R.string.boost_develop_text,
+            image = R.drawable.play_logo,
+            tags = listOf(DEVELOPER_NEWS, OTHER),
+            id = 3
         ), ArticleModel(
-            R.string.week_three_challenge_title,
-            R.string.week_three_challenge_text,
-            R.drawable.week_three_challenge,
-            listOf(DEVELOPER_NEWS, CHALLENGE_WEEK)
+            title = R.string.week_three_challenge_title,
+            text = R.string.week_three_challenge_text,
+            image = R.drawable.week_three_challenge,
+            tags = listOf(DEVELOPER_NEWS, CHALLENGE_WEEK),
+            id = 4
         ), ArticleModel(
-            R.string.sub_dollar_title,
-            R.string.sub_dollar_text,
-            R.drawable.sub_dollar,
-            listOf(DEVELOPER_NEWS, OTHER)
+            title = R.string.sub_dollar_title,
+            text = R.string.sub_dollar_text,
+            image = R.drawable.sub_dollar,
+            tags = listOf(DEVELOPER_NEWS, OTHER),
+            id = 5
         )
     )
 
@@ -55,22 +61,48 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     private val minScale = 0.65f
     private val minAlpha = 0.3f
     private var booleanTags1: BooleanArray = booleanArrayOf(true, true, true, true)
-    private var booleanTags2: BooleanArray = booleanArrayOf()
+    private var badgeStateId0 = BadgeState(0, 0)
+    private var badgeStateId1 = BadgeState(1, 0)
+    private var badgeStateId2 = BadgeState(2, 0)
+    private var badgeStateId3 = BadgeState(3, 0)
+    private var badgeStateId4 = BadgeState(4, 0)
+    private var badgeStateId5 = BadgeState(5, 0)
+
+    //Пытался через лист, но как сохранить лист из инстанс дата класса?
+    private var badgeStateList = listOf<BadgeState>(
+        BadgeState(0, 0),
+        BadgeState(1, 0),
+        BadgeState(2, 0),
+        BadgeState(3, 0),
+        BadgeState(4, 0),
+        BadgeState(5, 0),
+    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-/*        if (savedInstanceState != null) {
-            booleanTags2 = savedInstanceState.getBooleanArray("Array")
+        if (savedInstanceState != null) {
+            booleanTags1 = savedInstanceState.getBooleanArray("Array")
                 ?: error("Error in save state!")
-            Log.d(
-                "CustomTAF",
-                "сейчас booleanTags2 такой в месте восстановления : ${booleanTags2[0]},${booleanTags2[1]},${booleanTags2[2]},${booleanTags2[3]}"
-            )
-        }*/
+            badgeStateId0 = savedInstanceState.getParcelable("Id0")
+                ?: error("Error in parcel!")
+            badgeStateId1 = savedInstanceState.getParcelable("Id1")
+                ?: error("Error in parcel!")
+            badgeStateId2 = savedInstanceState.getParcelable("Id2")
+                ?: error("Error in parcel!")
+            badgeStateId3 = savedInstanceState.getParcelable("Id3")
+                ?: error("Error in parcel!")
+            badgeStateId4 = savedInstanceState.getParcelable("Id4")
+                ?: error("Error in parcel!")
+            badgeStateId5 = savedInstanceState.getParcelable("Id5")
+                ?: error("Error in parcel!")
+
+        }
         articlesFilter(articles)
+        restoreAllBadge()
         binding.toolbar.title = "Developer news"
         binding.toolbar.menu.findItem(R.id.actionFilter).setOnMenuItemClickListener {
             showFilterDialogFragment()
@@ -129,12 +161,12 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         }
         if (booleanTags1[2]) {
             filterArticlesList.addAll(listArticles.filter {
-                it.tags.contains(OTHER)
+                it.tags.contains(CHALLENGE_WEEK)
             })
         }
         if (booleanTags1[3]) {
             filterArticlesList.addAll(listArticles.filter {
-                it.tags.contains(CHALLENGE_WEEK)
+                it.tags.contains(OTHER)
             })
         }
         val adapter = ViewPagerAdapter(filterArticlesList.toList(), this)
@@ -146,23 +178,57 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         TabLayoutMediator(binding.tabsPager, binding.containerViewPager2) { tab, position ->
             tab.text = "News #${position + 1}"
         }.attach()
+        // restoreBadgeState(badgeStateList)
+    }
+
+    private fun restoreBadgeState(badge: BadgeState) {
+        when (badge.ArticleId) {
+            0 -> createBadge(0, badge.count)
+            1 -> createBadge(1, badge.count)
+            2 -> createBadge(2, badge.count)
+            3 -> createBadge(3, badge.count)
+            4 -> createBadge(4, badge.count)
+            5 -> createBadge(5, badge.count)
+        }
+    }
+
+    private fun restoreAllBadge() {
+        restoreBadgeState(badgeStateId0)
+        restoreBadgeState(badgeStateId1)
+        restoreBadgeState(badgeStateId2)
+        restoreBadgeState(badgeStateId3)
+        restoreBadgeState(badgeStateId4)
+        restoreBadgeState(badgeStateId5)
+    }
+
+    private fun createBadge(id: Int, count: Int) {
+        if (count > 0) {
+            binding.tabsPager.getTabAt(id)?.orCreateBadge?.apply {
+                number = count
+                badgeGravity = BadgeDrawable.TOP_END
+            }
+        }
+
     }
 
     override fun onFragmentClick(data: Any) {
         if (data is Int) {
             binding.tabsPager.getTabAt(data)?.orCreateBadge?.apply {
                 number += 1
+                when (data) {
+                    0 -> badgeStateId0.increaseCount()
+                    1 -> badgeStateId1.increaseCount()
+                    2 -> badgeStateId2.increaseCount()
+                    3 -> badgeStateId3.increaseCount()
+                    4 -> badgeStateId4.increaseCount()
+                    5 -> badgeStateId5.increaseCount()
+                }
                 badgeGravity = BadgeDrawable.TOP_END
             }
         }
         if (data is BooleanArray) {
             booleanTags1 = data
-            booleanTags2 = data
             articlesFilter(articles)
-            Log.d(
-                "CustomTAF",
-                "сейчас booleanTags2 такой : ${booleanTags2[0]},${booleanTags2[1]},${booleanTags2[2]},${booleanTags2[3]}"
-            )
         }
     }
 
@@ -182,10 +248,6 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     }
 
     private fun showFilterDialogFragment() {
-        Log.d(
-            "CustomTAF",
-            "сейчас лист такой в активити: ${booleanTags1[0]},${booleanTags1[1]},${booleanTags1[2]},${booleanTags1[3]}"
-        )
         FilterDialogFragment.newInstance(booleanTags1)
             .show(supportFragmentManager, "Filter dialog")
     }
@@ -201,10 +263,17 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
-        outState.putBooleanArray("Array", booleanTags2)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBooleanArray("Array", booleanTags1)
+        outState.putParcelable("Id0", badgeStateId0)
+        outState.putParcelable("Id1", badgeStateId1)
+        outState.putParcelable("Id2", badgeStateId2)
+        outState.putParcelable("Id3", badgeStateId3)
+        outState.putParcelable("Id4", badgeStateId4)
+        outState.putParcelable("Id5", badgeStateId5)
 
     }
+
 
 }

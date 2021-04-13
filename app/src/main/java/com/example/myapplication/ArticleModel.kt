@@ -7,6 +7,7 @@ data class ArticleModel(
     @StringRes val title: Int,
     @StringRes val text: Int,
     @DrawableRes val image: Int,
-    val tags: List<ArticleTag>
+    val tags: List<ArticleTag>,
+    val id: Int
 ) {
 }
