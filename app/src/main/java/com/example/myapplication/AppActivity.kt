@@ -136,14 +136,6 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
             }
         })
 
-
-        binding.testButton.setOnClickListener {
-            val currentItem = binding.containerViewPager2.currentItem
-            if (currentItem <= 4) {
-                binding.containerViewPager2.currentItem = currentItem + 1
-            } else binding.containerViewPager2.currentItem = 0
-        }
-
     }
 
 
