@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,6 @@ import com.example.myapplication.databinding.ActivityAppBinding
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-import java.util.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -61,15 +59,7 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     private val minScale = 0.65f
     private val minAlpha = 0.3f
     private var booleanTags1: BooleanArray = booleanArrayOf(true, true, true, true)
-    private var badgeStateId0 = BadgeState(0, 0)
-    private var badgeStateId1 = BadgeState(1, 0)
-    private var badgeStateId2 = BadgeState(2, 0)
-    private var badgeStateId3 = BadgeState(3, 0)
-    private var badgeStateId4 = BadgeState(4, 0)
-    private var badgeStateId5 = BadgeState(5, 0)
-
-    //Пытался через лист, но как сохранить лист из инстанс дата класса?
-    private var badgeStateList = listOf<BadgeState>(
+    private var badgeStateArray = arrayOf(
         BadgeState(0, 0),
         BadgeState(1, 0),
         BadgeState(2, 0),
@@ -87,26 +77,14 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         if (savedInstanceState != null) {
             booleanTags1 = savedInstanceState.getBooleanArray("Array")
                 ?: error("Error in save state!")
-            badgeStateId0 = savedInstanceState.getParcelable("Id0")
-                ?: error("Error in parcel!")
-            badgeStateId1 = savedInstanceState.getParcelable("Id1")
-                ?: error("Error in parcel!")
-            badgeStateId2 = savedInstanceState.getParcelable("Id2")
-                ?: error("Error in parcel!")
-            badgeStateId3 = savedInstanceState.getParcelable("Id3")
-                ?: error("Error in parcel!")
-            badgeStateId4 = savedInstanceState.getParcelable("Id4")
-                ?: error("Error in parcel!")
-            badgeStateId5 = savedInstanceState.getParcelable("Id5")
-                ?: error("Error in parcel!")
+            badgeStateArray = savedInstanceState.getParcelableArray("badges") as Array<BadgeState>
 
         }
         articlesFilter(articles)
-        restoreAllBadge()
+        restoreBadgeState(badgeStateArray)
         binding.toolbar.title = "Developer news"
         binding.toolbar.menu.findItem(R.id.actionFilter).setOnMenuItemClickListener {
             showFilterDialogFragment()
-            //showFilterDialog()
             true
         }
 
@@ -132,6 +110,7 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                badgeStateArray[position].count = 0
                 binding.tabsPager.getTabAt(position)?.removeBadge()
             }
         })
@@ -170,27 +149,12 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         TabLayoutMediator(binding.tabsPager, binding.containerViewPager2) { tab, position ->
             tab.text = "News #${position + 1}"
         }.attach()
-        // restoreBadgeState(badgeStateList)
     }
 
-    private fun restoreBadgeState(badge: BadgeState) {
-        when (badge.ArticleId) {
-            0 -> createBadge(0, badge.count)
-            1 -> createBadge(1, badge.count)
-            2 -> createBadge(2, badge.count)
-            3 -> createBadge(3, badge.count)
-            4 -> createBadge(4, badge.count)
-            5 -> createBadge(5, badge.count)
+    private fun restoreBadgeState(badgeArray: Array<BadgeState>) {
+        for (badge in badgeArray) {
+            createBadge(badge.ArticleId, badge.count)
         }
-    }
-
-    private fun restoreAllBadge() {
-        restoreBadgeState(badgeStateId0)
-        restoreBadgeState(badgeStateId1)
-        restoreBadgeState(badgeStateId2)
-        restoreBadgeState(badgeStateId3)
-        restoreBadgeState(badgeStateId4)
-        restoreBadgeState(badgeStateId5)
     }
 
     private fun createBadge(id: Int, count: Int) {
@@ -207,13 +171,10 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
         if (data is Int) {
             binding.tabsPager.getTabAt(data)?.orCreateBadge?.apply {
                 number += 1
-                when (data) {
-                    0 -> badgeStateId0.increaseCount()
-                    1 -> badgeStateId1.increaseCount()
-                    2 -> badgeStateId2.increaseCount()
-                    3 -> badgeStateId3.increaseCount()
-                    4 -> badgeStateId4.increaseCount()
-                    5 -> badgeStateId5.increaseCount()
+                for (badge in badgeStateArray) {
+                    if (badge.ArticleId == data) {
+                        badge.increaseCount()
+                    }
                 }
                 badgeGravity = BadgeDrawable.TOP_END
             }
@@ -258,12 +219,7 @@ class AppActivity : AppCompatActivity(), FragmentOnClickListener {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBooleanArray("Array", booleanTags1)
-        outState.putParcelable("Id0", badgeStateId0)
-        outState.putParcelable("Id1", badgeStateId1)
-        outState.putParcelable("Id2", badgeStateId2)
-        outState.putParcelable("Id3", badgeStateId3)
-        outState.putParcelable("Id4", badgeStateId4)
-        outState.putParcelable("Id5", badgeStateId5)
+        outState.putParcelableArray("badges", badgeStateArray)
 
     }
 
